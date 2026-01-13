@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meet Our Teachers</title>
+  <link rel="stylesheet" href="teacherprofile.css">
+  <link rel="icon" type="image/png" href="images/images-removebg-preview (1).png">
+  <style>
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      padding-top: 60px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.8);
+    }
+
+    .modal-content {
+      margin: auto;
+      display: block;
+      max-width: 80%;
+      border-radius: 10px;
+      animation: zoomIn 0.3s ease;
+    }
+
+    @keyframes zoomIn {
+      from {transform: scale(0.7);}
+      to {transform: scale(1);}
+    }
+
+    .teacher-card {
+  background-color: rgba(255, 255, 255, 0.4); /* white with 40% opacity */
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+
+    /* X button */
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 35px;
+      color: white;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .close:hover {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="logo">
+      <img src="images/images-removebg-preview (1).png" alt="School Logo">
+      <span>Colegio de San Francisco Javier</span>
+    </div>
+    <ul>
+      <li><a href="frontcover.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="teacherprofile.html" class="active">Teachers</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Teachers Section -->
+  <section class="teachers-section">
+    <h1>Meet Our IT Teachers</h1>
+    <div class="teachers-container">
+      
+      <div class="teacher-card">
+        <img src="images/481467869_1784340572413974_5866082841437201009_n.jpg" alt="Mr. Curado" class="teacher-img">
+        <h2>Mr. Curado</h2>
+        <p>Expert in networking, system administration, and cybersecurity.</p>
+        <p>📞 0912-345-6789</p>
+        <a href="https://www.facebook.com/richnil.curdo" target="_blank">Facebook</a>
+      </div>
+
+      <div class="teacher-card">
+        <img src="images/518358126_2004500190365678_3291464478406054331_n.jpg" alt="Mr. Albon" class="teacher-img">
+        <h2>Mr. Albon</h2>
+        <p>Specialist in programming, database design, and web development.</p>
+        <p>📞 0912-345-6789</p>
+        <a href="https://www.facebook.com/francisbrix.albon.3" target="_blank">Facebook</a>
+      </div>
+
+      <div class="teacher-card">
+        <img src="images/475277219_961658969255860_1793293040012312960_n.jpg" alt="Mr. Zerna" class="teacher-img">
+        <h2>Mr. Zerna</h2>
+        <p>Focuses on IT project management and software engineering.</p>
+        <p>📞 0912-345-6789</p>
+        <a href="https://www.facebook.com/vincentblez.zerna.9/" target="_blank">Facebook</a>
+      </div>
+
+      <div class="teacher-card">
+        <img src="images/472873335_907787158132731_261274640845072537_n.jpg" alt="Ms. Morandarte" class="teacher-img">
+        <h2>Ms. Morandarte</h2>
+        <p>Teaches UI/UX design, multimedia, and creative IT solutions.</p>
+        <p>📞 0912-345-6789</p>
+        <a href="https://www.facebook.com/antoniette.morandarte.3" target="_blank">Facebook</a>
+      </div>
+
+      <div class="teacher-card">
+        <img src="images/487826172_3020307191469253_6912112419897881499_n.jpg" alt="Mr. Recentes" class="teacher-img">
+        <h2>Mr. Recentes</h2>
+        <p>Specializes in cloud computing and virtualization.</p>
+        <p>📞 0912-345-6789</p>
+        <a href="https://www.facebook.com/jerald.recentes.2024" target="_blank">Facebook</a>
+      </div>
+
+      <div class="teacher-card">
+        <img src="images/471265960_3986335181639547_6908194358231308173_n.jpg" alt="Mr. Sab" class="teacher-img">
+        <h2>Mr. Sab</h2>
+        <p>Expert in mobile app development and cross-platform solutions.</p>
+        <p>📞 0912-345-6789</p>
+        <a href="https://www.facebook.com/felymarcosab13" target="_blank">Facebook</a>
+      </div>
+
+      <div class="teacher-card">
+        <img src="images/475098638_986827679962190_335714850846199982_n.jpg" alt="Mr. Bongabong" class="teacher-img">
+        <h2>Mr. Bongabong</h2>
+        <p>Knowledgeable in artificial intelligence and machine learning.</p>
+        <p>📞 0912-345-6789</p>
+        <a href="https://www.facebook.com/earllaurence.trazobongabong.5" target="_blank">Facebook</a>
+      </div>
+
+      <div class="teacher-card">
+        <img src="images/505596508_122093679980913293_8509342166028950573_n.jpg" alt="Mr. Monseñeros" class="teacher-img">
+        <h2>Mr. Monseñeros</h2>
+        <p>Specialist in robotics, IoT, and automation.</p>
+        <p>📞 0912-345-6789</p>
+        <a href="https://www.facebook.com/profile.php?id=61577398792049" target="_blank">Facebook</a>
+      </div>
+
+      <div class="teacher-card">
+        <img src="images/3da23c2e-c6e1-4a91-b5e2-920a7fd2b90d.jpg" alt="Mr. Balbaquera" class="teacher-img">
+        <h2>Mr. Balbaquera</h2>
+        <p>Expert in IT infrastructure and hardware maintenance.</p>
+        <p>📞 0912-345-6789</p>
+        <a href="https://www.facebook.com/jv.balbaquera.2024" target="_blank">Facebook</a>
+      </div>
+
+      <div class="teacher-card">
+        <img src="images/501426052_1200525338376507_7476026186700802702_n.jpg" alt="Mr. Tanaga" class="teacher-img">
+        <h2>Mr. Tanaga</h2>
+        <p>Focuses on software testing and quality assurance.</p>
+        <p>📞 0912-345-6789</p>
+        <a href="https://www.facebook.com/bon.tanaga" target="_blank">Facebook</a>
+      </div>
+
+      <div class="teacher-card">
+        <img src="images/475154258_610957254862056_8543200948787827596_n.jpg" alt="Mr. Macapato" class="teacher-img">
+        <h2>Mr. Macapato</h2>
+        <p>Emphasizes software testing and maintaining high quality standards.</p>
+        <p>📞 0912-345-6789</p>
+        <a href="https://www.facebook.com/abdulnassib.tan.macapato" target="_blank">Facebook</a>
+      </div>
+
+      <div class="teacher-card">
+        <img src="images/462766430_2545352972326817_2962887085362544910_n.jpg" alt="Mr. Canturias" class="teacher-img">
+        <h2>Mr. Canturias</h2>
+        <p>Centers on software testing and ensuring high-quality results.</p>
+        <p>📞 0912-345-6789</p>
+        <a href="https://www.facebook.com/Lanss21" target="_blank">Facebook</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Modal -->
+  <div id="imgModal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="modalImage">
+  </div>
+
+  <script>
+  // Get modal elements
+  const modal = document.getElementById("imgModal");
+  const modalImg = document.getElementById("modalImage");
+  const closeBtn = document.querySelector(".close");
+
+  // Open modal when clicking any teacher image
+  document.querySelectorAll(".teacher-img").forEach(img => {
+    img.addEventListener("click", function() {
+      modal.style.display = "block";
+      modalImg.src = this.src;
+    });
+  });
+
+  // Close modal when clicking X
+  closeBtn.addEventListener("click", function() {
+    modal.style.display = "none";
+  });
+
+  // Close modal when clicking outside the image
+  modal.addEventListener("click", function(e) {
+    if (e.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
+  // Close modal when pressing Esc key
+  document.addEventListener("keydown", function(e) {
+    if (e.key === "Escape") {
+      modal.style.display = "none";
+    }
+  });
+</script>

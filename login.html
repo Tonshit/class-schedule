@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login / Sign Up</title>
+  <link rel="stylesheet" href="login.css">
+  <link rel="icon" type="image/png" href="images/images-removebg-preview (1).png">
+</head>
+<body>
+  <!-- Logo -->
+  <div class="logo">
+    <img src="images/images-removebg-preview (1).png" alt="School Logo">
+  </div>
+
+  <!-- Header Text -->
+  <div class="header-text">
+    <h1>Colegio de San Francisco Javier</h1>
+    <p>Student Log in</p>
+  </div>
+
+  <!-- Form Container -->
+  <div class="form-container" id="form-container">
+    <!-- Image Side -->
+    <div class="form-image">
+      <img src="images/images-removebg-preview (1).png" alt="Books and Pencils">
+    </div>
+
+    <!-- Form Box -->
+    <div class="form-box" id="form-box">
+      <!-- LOGIN FORM -->
+      <div class="form login-form" id="login-form">
+        <h2>Login</h2>
+        <input type="text" id="login-username" placeholder="Username" required>
+        <input type="password" id="login-password" placeholder="Password" required>
+        <button onclick="login()">Login</button>
+        <p>Don't have an account? <a href="#" onclick="toggleForm()">Sign Up</a></p>
+      </div>
+
+      <!-- SIGNUP FORM -->
+      <div class="form signup-form hidden" id="signup-form">
+        <h2>Sign Up</h2>
+        <input type="text" id="signup-username" placeholder="Username" required>
+        <input type="password" id="signup-password" placeholder="Password" required>
+
+        <!-- Terms Checkbox -->
+        <div style="font-size: 12px; margin-top: 10px;">
+          <input type="checkbox" id="terms-checkbox" required>
+          I agree to the <a href="terms.html" target="_blank">Terms and Conditions</a>
+        </div>
+
+        <button onclick="signup()">Sign Up</button>
+        <p>Already have an account? <a href="#" onclick="toggleForm()">Login</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleForm() {
+      document.getElementById("login-form").classList.toggle("hidden");
+      document.getElementById("signup-form").classList.toggle("hidden");
+    }
+
+    function signup() {
+      const username = document.getElementById("signup-username").value;
+      const password = document.getElementById("signup-password").value;
+      const termsChecked = document.getElementById("terms-checkbox").checked;
+
+      if (!termsChecked) {
+        alert("You must agree to the Terms and Conditions.");
+        return;
+      }
+
+      if (username && password) {
+        localStorage.setItem("user_" + username, password);
+        alert("Account created successfully! You can now log in.");
+        toggleForm();
+      } else {
+        alert("Please fill in all fields.");
+      }
+    }
+
+    function login() {
+      const username = document.getElementById("login-username").value;
+      const password = document.getElementById("login-password").value;
+
+      const storedPassword = localStorage.getItem("user_" + username);
+
+      if (storedPassword === password) {
+        //alert("Login successful!");
+        window.location.href = "frontcover.html";
+      } else {
+        alert("Invalid username or password.");
+      }
+    }
+  </script>
+</body>
+</html>

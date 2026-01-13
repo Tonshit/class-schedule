@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Announcement</title>
+  <link rel="icon" type="image/png" href="images/images-removebg-preview (1).png">
+  <!-- ✅ Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://img.freepik.com/premium-photo/fluid-organic-white-color-abstract-background-unique-designs_851755-381525.jpg') no-repeat center center/cover;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .navbar {
+      background-color: #1e4fa3;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      animation: fadeIn 1s ease-out forwards;
+      opacity: 0;
+    }
+
+    .nav-logo-text {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 15px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .nav-links li a:hover {
+      color: #3498db;
+    }
+
+    .top-right-logo {
+      position: absolute;
+      top: 80px;
+      right: 20px;
+      z-index: 10;
+      animation: fadeIn 1s ease-out forwards;
+      opacity: 0;
+    }
+
+    .top-right-logo img {
+      width: 150px;
+      height: auto;
+    }
+
+    /* ✅ Two-column layout container */
+    .main-container {
+      display: flex;
+      gap: 30px;
+      max-width: 1200px;
+      margin: 120px auto 40px;
+      padding: 0 20px;
+    }
+
+    /* Left side form */
+    .form-container {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      animation: fadeIn 1s ease-out forwards;
+      opacity: 0;
+    }
+
+    .form-container h1,
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 15px;
+      color: #1e4fa3;
+    }
+
+    .form-container h2 {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .form-container input[type="text"],
+    .form-container textarea,
+    .form-container input[type="file"] {
+      width: 100%;
+      margin-bottom: 15px;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    /* ✅ Button container (to align them nicely) */
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 15px;
+    }
+
+    .form-container button,
+    .form-container .view-link {
+      flex: 1;
+      min-width: 150px;
+      padding: 12px 15px;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    /* Primary button */
+    .form-container button[type="submit"] {
+      background: #1e4fa3;
+      color: white;
+    }
+    .form-container button[type="submit"]:hover {
+      background: #17408b;
+      transform: scale(1.05);
+    }
+
+    /* Cancel class button */
+    .form-container .cancel-btn {
+      background: #0b9ea8;
+      color: white;
+    }
+    .form-container .cancel-btn:hover {
+      background: #0b9ea8;
+      transform: scale(1.05);
+    }
+
+    /* Delete all */
+    .form-container .delete-btn {
+      background: crimson;
+      color: white;
+    }
+    .form-container .delete-btn:hover {
+      background: darkred;
+      transform: scale(1.05);
+    }
+
+    /* View all link styled like button */
+    .form-container .view-link {
+      background: #31a3d8;
+      color: white;
+      text-decoration: none;
+    }
+    .form-container .view-link:hover {
+      background: #31a3d8;
+      transform: scale(1.05);
+    }
+
+    /* Right side announcements */
+    .announcement-list {
+      flex: 1;
+      max-height: 700px;
+      overflow-y: auto;
+      animation: fadeIn 1s ease-out forwards;
+      opacity: 0;
+    }
+
+    .post {
+      background: #f9f9f9;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    .post button {
+      background-color: crimson;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .post button:hover {
+      background-color: darkred;
+    }
+
+    .post img {
+      max-width: 100%;
+      margin-top: 10px;
+      border-radius: 6px;
+    }
+
+    /* ✅ Responsive: stack on small screens */
+    @media (max-width: 900px) {
+      .main-container {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-right-logo">
+    <img src="images/images-removebg-preview (1).png" alt="Logo" />
+  </div>
+
+  <nav class="navbar">
+    <div class="nav-logo-text">Colegio de San Francisco Javier Portal</div>
+    <ul class="nav-links">
+      <li><a href="adminfrontcover.html">Home</a></li>
+      <li><a href="editschedule.html">Edit Schedule</a></li>
+      <li><a href="adminlogin.html">Logout</a></li>
+    </ul>
+  </nav>
+
+  <!-- ✅ Two-column wrapper -->
+  <div class="main-container">
+    <!-- Left Column -->
+    <div class="form-container">
+      <h2>COLEGIO DE SAN FRANCISCO JAVIER</h2>
+      <h1>Create a New Announcement</h1>
+      <form id="announcementForm">
+        <input type="text" id="title" placeholder="Enter title..." required />
+        <textarea id="message" placeholder="Write your announcement..." rows="6" required></textarea>
+        <input type="file" id="image" accept="image/*" />
+        <div class="button-group">
+          <button type="submit"><i class="fa-solid fa-pen"></i> Post</button>
+          <button type="button" class="cancel-btn" onclick="postClassCancellation()"><i class="fa-solid fa-ban"></i> Cancel Class</button>
+          <button type="button" class="delete-btn" onclick="clearAnnouncements()"><i class="fa-solid fa-trash"></i> Delete All</button>
+          <a class="view-link" href="adminannouncement.html"><i class="fa-solid fa-eye"></i> View</a>
+        </div>
+      </form>
+    </div>
+
+    <!-- Right Column -->
+    <div class="announcement-list" id="announcementList"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById('announcementForm');
+    const announcementList = document.getElementById('announcementList');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const title = document.getElementById('title').value;
+      const message = document.getElementById('message').value;
+      const imageInput = document.getElementById('image');
+      const date = new Date().toLocaleString();
+
+      const reader = new FileReader();
+      reader.onload = function () {
+        const imageData = reader.result;
+
+        const newPost = {
+          title,
+          message,
+          image: imageData,
+          date
+        };
+
+        const existingPosts = JSON.parse(localStorage.getItem('announcements')) || [];
+        existingPosts.unshift(newPost);
+        localStorage.setItem('announcements', JSON.stringify(existingPosts));
+
+        form.reset();
+        displayAnnouncements();
+      };
+
+      if (imageInput.files[0]) {
+        reader.readAsDataURL(imageInput.files[0]);
+      } else {
+        reader.onload();
+      }
+    });
+
+    function postClassCancellation() {
+      const date = new Date().toLocaleString();
+      const title = "Class Cancellation Notice";
+      const message = `📢 Class has been canceled.\n\nDate and Time Posted: ${date}\n\nPlease stay tuned for further updates.`;
+
+      const newPost = {
+        title,
+        message,
+        image: null,
+        date
+      };
+
+      const existingPosts = JSON.parse(localStorage.getItem('announcements')) || [];
+      existingPosts.unshift(newPost);
+      localStorage.setItem('announcements', JSON.stringify(existingPosts));
+
+      displayAnnouncements();
+    }
+
+    function clearAnnouncements() {
+      if (confirm("Are you sure you want to delete all announcements?")) {
+        localStorage.removeItem("announcements");
+        displayAnnouncements();
+      }
+    }
+
+    function deletePost(index) {
+      const posts = JSON.parse(localStorage.getItem("announcements")) || [];
+      posts.splice(index, 1);
+      localStorage.setItem("announcements", JSON.stringify(posts));
+      displayAnnouncements();
+    }
+
+    function displayAnnouncements() {
+      const posts = JSON.parse(localStorage.getItem("announcements")) || [];
+      announcementList.innerHTML = "";
+
+      posts.forEach((post, index) => {
+        const postDiv = document.createElement("div");
+        postDiv.classList.add("post");
+
+        postDiv.innerHTML = `
+          <h3>${post.title}</h3>
+          <p>${post.message}</p>
+          ${post.image ? `<img src="${post.image}">` : ''}
+          <p><small>Posted on: ${post.date}</small></p>
+          <button onclick="deletePost(${index})"><i class="fa-solid fa-trash"></i> Delete</button>
+        `;
+
+        announcementList.appendChild(postDiv);
+      });
+    }
+
+    window.onload = displayAnnouncements;
+  </script>
+</body>
+</html>

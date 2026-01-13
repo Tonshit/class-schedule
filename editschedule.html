@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edit Class Schedules</title>
+  <link rel="icon" href="images/images-removebg-preview (1).png">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #f0f4f8, #dfe9f3);
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #1580d8;
+      padding: 10px 30px;
+      color: white;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo {
+      width: 60px;
+      margin-right: 15px;
+    }
+
+    .school-info h1 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .school-info p {
+      margin: 0;
+      font-size: 12px;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links li a {
+      color: #1e4fa3;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 30px;
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      background-color: #007BFF;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-top: 20px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      background-color: #f9f9f9;
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    li span {
+      flex: 1;
+    }
+
+    li button {
+      background-color: #dc3545;
+      padding: 5px 10px;
+      font-size: 12px;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .teacher-wrapper {
+      display: flex;
+      gap: 10px;
+    }
+
+    .teacher-wrapper select {
+      width: 30%;
+    }
+
+    .teacher-wrapper input {
+      width: 70%;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header>
+    <nav class="navbar">
+      <div class="logo-container">
+        <img src="images/images-removebg-preview (1).png" alt="School Logo" class="logo">
+        <div class="school-info">
+          <h1>Colegio de San Francisco Javier</h1>
+          <p>East Poblacion Rizal, Zamboanga del Norte</p>
+        </div>
+      </div>
+      <ul class="nav-links">
+        <li><a href="adminclassschedule.html">Class Schedule</a></li>
+        <li><a href="createannouncement.html" class="active">Create Announcement</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Page Content -->
+  <div class="container">
+    <h1>Edit Class Schedules</h1>
+
+    <label for="courseSelect">Select Course:</label>
+    <select id="courseSelect">
+      <option value="bsit">BSIT</option>
+      <option value="bshm">BSHM</option>
+      <option value="bsed">BSED</option>
+    </select>
+
+    <label for="yearSelect">Select Year Level:</label>
+    <select id="yearSelect"></select>
+
+    <label for="subjectSelect">Subject:</label>
+    <select id="subjectSelect" size="5"></select>
+
+    <label for="teacherTitle">Teacher's Title and Surname:</label>
+    <div class="teacher-wrapper">
+      <select id="teacherTitle">
+        <option value="Mr.">Mr.</option>
+        <option value="Ms.">Ms.</option>
+        <option value="Mrs.">Mrs.</option>
+      </select>
+      <input type="text" id="teacherInput" placeholder="e.g. Reyes">
+    </div>
+
+    <button onclick="addSchedule()">Add Schedule</button>
+
+    <h2>Current Schedules</h2>
+    <ul id="scheduleList"></ul>
+  </div>
+
+<script>
+  // Subjects by Course & Year
+  const subjectsByCourse = {
+    bsit: {
+      year1: ["Intro to Computing","Programming 1","Math in the Modern World","Purposive Communication","Web Development 1"],
+      year2: ["Data Structures","OOP","Database Systems 1","Computer Architecture","Web Development 2"],
+      year3: ["Systems Analysis","Mobile App Dev","Network Security","Software Engineering","IT Elective 1"],
+      year4: ["Capstone Project","IT Ethics","Technopreneurship","Internship","IT Elective 2"]
+    },
+    bshm: {
+      year1: ["Intro to Hospitality","Front Office Procedures","Food & Beverage Service","Housekeeping Operations"],
+      year2: ["Culinary Arts","Event Management","Tourism Principles"],
+      year3: ["Hospitality Marketing","Travel & Tours Management"],
+      year4: ["Internship","Seminar in Hospitality"]
+    },
+    bsed: {
+      year1: ["Foundations of Education","Child Development","Facilitating Learning","Purposive Communication"],
+      year2: ["Curriculum Development","Assessment of Learning","Educational Technology"],
+      year3: ["Field Study 1","Field Study 2"],
+      year4: ["Practice Teaching","Educational Seminar"]
+    }
+  };
+
+  const availableSlots = [
+    { day: 'MWF', time: '7:30AM - 9:00AM', room: 'Room 101' },
+    { day: 'MWF', time: '9:00AM - 10:30AM', room: 'Room 102' },
+    { day: 'MWF', time: '10:30AM - 12:00PM', room: 'Room 103' },
+    { day: 'TTH', time: '1:00PM - 2:30PM', room: 'Room 201' },
+    { day: 'TTH', time: '2:30PM - 4:00PM', room: 'Room 202' },
+    { day: 'MWF', time: '7:30AM - 9:00AM', room: 'Room 401' },
+    { day: 'MWF', time: '9:00AM - 10:30AM', room: 'Room 402' },
+    { day: 'MWF', time: '10:30AM - 12:00PM', room: 'Room 403' },
+    { day: 'TTH', time: '1:00PM - 2:30PM', room: 'Room 501' },
+    { day: 'TTH', time: '2:30PM - 4:00PM', room: 'Room 502' },
+    { day: 'MWF', time: '7:30AM - 9:00AM', room: 'Room 501' },
+    { day: 'MWF', time: '9:00AM - 10:30AM', room: 'Room 602' },
+    { day: 'MWF', time: '10:30AM - 12:00PM', room: 'Room 603' },
+    { day: 'TTH', time: '1:00PM - 2:30PM', room: 'Room 601' },
+    { day: 'TTH', time: '2:30PM - 4:00PM', room: 'Room 602' },
+     { day: 'MWF', time: '7:30AM - 9:00AM', room: 'Room 701' },
+    { day: 'MWF', time: '9:00AM - 10:30AM', room: 'Room 702' },
+    { day: 'MWF', time: '10:30AM - 12:00PM', room: 'Room 703' },
+    { day: 'TTH', time: '1:00PM - 2:30PM', room: 'Room 801' },
+    { day: 'TTH', time: '2:30PM - 4:00PM', room: 'Room 802' },
+    { day: 'MWF', time: '7:30AM - 9:00AM', room: 'Room 901' },
+    { day: 'MWF', time: '9:00AM - 10:30AM', room: 'Room 902' },
+    { day: 'MWF', time: '10:30AM - 12:00PM', room: 'Room 903' },
+    { day: 'TTH', time: '1:00PM - 2:30PM', room: 'Room 1001' },
+    { day: 'TTH', time: '2:30PM - 4:00PM', room: 'Room 1002' },
+    { day: 'MWF', time: '7:30AM - 9:00AM', room: 'Room 1003' },
+    { day: 'MWF', time: '9:00AM - 10:30AM', room: 'Room 1004' },
+    { day: 'MWF', time: '10:30AM - 12:00PM', room: 'Room 1005' },
+    { day: 'TTH', time: '1:00PM - 2:30PM', room: 'Room 1006' },
+    { day: 'TTH', time: '2:30PM - 4:00PM', room: 'Room 1007' }
+    
+  ];
+
+  const defaultData = { bsit: {year1:[],year2:[],year3:[],year4:[]}, bshm: {year1:[],year2:[],year3:[],year4:[]}, bsed: {year1:[],year2:[],year3:[],year4:[]} };
+
+  const courseSelect = document.getElementById("courseSelect");
+  const yearSelect = document.getElementById("yearSelect");
+  const subjectSelect = document.getElementById("subjectSelect");
+  const scheduleList = document.getElementById("scheduleList");
+
+  function getScheduleData() {
+    const saved = localStorage.getItem("classScheduleData");
+    return saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(defaultData));
+  }
+
+  function saveScheduleData(data) {
+    localStorage.setItem("classScheduleData", JSON.stringify(data));
+  }
+
+  function updateYearOptions() {
+    const course = courseSelect.value;
+    yearSelect.innerHTML = "";
+    for (let year in subjectsByCourse[course]) {
+      const opt = document.createElement("option");
+      opt.value = year;
+      opt.textContent = year.toUpperCase();
+      yearSelect.appendChild(opt);
+    }
+    updateSubjectOptions();
+  }
+
+  function updateSubjectOptions() {
+    const course = courseSelect.value;
+    const year = yearSelect.value;
+    subjectSelect.innerHTML = "";
+    subjectsByCourse[course][year].forEach(subject => {
+      const option = document.createElement("option");
+      option.value = subject;
+      option.textContent = subject;
+      subjectSelect.appendChild(option);
+    });
+  }
+
+  function loadSchedule() {
+    const data = getScheduleData();
+    const course = courseSelect.value;
+    const year = yearSelect.value;
+    scheduleList.innerHTML = "";
+    data[course][year].forEach((item, index) => {
+      const li = document.createElement("li");
+      const span = document.createElement("span");
+      span.textContent = item;
+
+      const delBtn = document.createElement("button");
+      delBtn.textContent = "Delete";
+      delBtn.onclick = () => {
+        data[course][year].splice(index, 1);
+        saveScheduleData(data);
+        loadSchedule();
+      };
+
+      li.appendChild(span);
+      li.appendChild(delBtn);
+      scheduleList.appendChild(li);
+    });
+  }
+
+  function findAvailableSlot(data) {
+    const allSchedules = Object.values(data).flatMap(course => Object.values(course).flat());
+    return availableSlots.find(slot => {
+      const slotStr = `${slot.day} - ${slot.time} - ${slot.room}`;
+      return !allSchedules.some(sched => sched.includes(slotStr));
+    });
+  }
+
+  function addSchedule() {
+    const course = courseSelect.value;
+    const year = yearSelect.value;
+    const subject = subjectSelect.value;
+    const title = document.getElementById("teacherTitle").value;
+    const surname = document.getElementById("teacherInput").value.trim();
+    const teacher = `${title} ${surname}`;
+
+    if (!subject || !surname) {
+      alert("Please fill in the subject and teacher's name.");
+      return;
+    }
+
+    const data = getScheduleData();
+
+    // Block duplicate in same course & year
+    if (data[course][year].some(sched => sched.startsWith(subject + " -"))) {
+      alert(`"${subject}" already scheduled for this year level.`);
+      return;
+    }
+
+    // Block duplicate across ALL courses
+    for (let c in data) {
+      for (let y in data[c]) {
+        if (data[c][y].some(sched => sched.startsWith(subject + " -"))) {
+          alert(`"${subject}" already scheduled in another course/year.`);
+          return;
+        }
+      }
+    }
+
+    const slot = findAvailableSlot(data);
+    if (!slot) {
+      alert("No available slots left.");
+      return;
+    }
+
+    const scheduleText = `${subject} - ${teacher} - ${slot.day} - ${slot.time} - ${slot.room}`;
+    data[course][year].push(scheduleText);
+    saveScheduleData(data);
+    document.getElementById("teacherInput").value = "";
+    loadSchedule();
+  }
+
+  courseSelect.addEventListener("change", () => {
+    updateYearOptions();
+    loadSchedule();
+  });
+
+  yearSelect.addEventListener("change", () => {
+    updateSubjectOptions();
+    loadSchedule();
+  });
+
+  window.onload = () => {
+    updateYearOptions();
+    loadSchedule();
+  };
+</script>
+</body>
+</html>

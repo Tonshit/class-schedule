@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Announcements</title>
+  <link rel="stylesheet" href="announcement.css" />
+  <link rel="icon" type="image/png" href="images/images-removebg-preview (1).png">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://img.freepik.com/premium-photo/fluid-organic-white-color-abstract-background-unique-designs_851755-381525.jpg') no-repeat center center/cover;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .navbar {
+      background-color: #1e4fa3;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      animation: fadeIn 1s ease-out forwards;
+      opacity: 0;
+    }
+
+    .nav-logo-text {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 15px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .nav-links li a:hover {
+      color: #3498db;
+    }
+
+    #notifBadge {
+      display: none;
+      position: absolute;
+      top: -8px;
+      right: -12px;
+      background: red;
+      color: white;
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-size: 12px;
+    }
+
+    .top-right-logo {
+      position: absolute;
+      top: 80px;
+      right: 20px;
+      z-index: 10;
+      animation: fadeIn 1s ease-out forwards;
+      opacity: 0;
+    }
+
+    .top-right-logo img {
+      width: 150px;
+      height: auto;
+    }
+
+    .announcement-container {
+      max-width: 900px;
+      margin: 120px auto 40px;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      animation: fadeIn 1s ease-out forwards;
+      opacity: 0;
+    }
+
+    .announcement-container h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #1e4fa3;
+    }
+
+    .announcement-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .announcement-card {
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      animation: fadeIn 1s ease-out forwards;
+      opacity: 0;
+    }
+
+    .announcement-card h2 {
+      margin: 0 0 10px;
+      color: #1e4fa3;
+    }
+
+    .announcement-card .datetime {
+      font-size: 0.9rem;
+      color: gray;
+      margin-bottom: 10px;
+    }
+
+    .announcement-card p {
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+
+    .announcement-card img {
+      max-width: 100%;
+      border-radius: 6px;
+      margin-top: 10px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .announcement-card img:hover {
+      transform: scale(1.03);
+    }
+
+    /* MODAL STYLES */
+    #imageModal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+    }
+
+    #imageModal img {
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 10px;
+    }
+
+    #imageModal .close {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      font-size: 40px;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Logo -->
+  <div class="top-right-logo">
+    <img src="images/images-removebg-preview (1).png" alt="Logo" />
+  </div>
+
+  <!-- Nav Bar -->
+  <nav class="navbar">
+    <div class="nav-left">
+      <div class="nav-logo-text">Colegio de San Francisco Javier Portal</div>
+    </div>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="frontcover.html">Home</a></li>
+        <li style="position: relative;">
+            <span id="notifBadge">0</span>
+          </a>
+        </li>
+        <li><a href="login.html">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Announcements -->
+  <div class="announcement-container">
+    <h1>Latest Announcements</h1>
+    <div class="announcement-list" id="announcementList"></div>
+  </div>
+
+  <!-- Image Modal -->
+  <div id="imageModal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img id="modalImage" src="" alt="Enlarged Image">
+  </div>
+
+  <!-- Script -->
+  <script>
+    const listContainer = document.getElementById('announcementList');
+    const posts = JSON.parse(localStorage.getItem('announcements')) || [];
+
+    const lastViewed = localStorage.getItem('lastViewed') || 0;
+    let newPosts = 0;
+
+    posts.forEach(post => {
+      const postTime = new Date(post.date).getTime();
+      if (postTime > lastViewed) newPosts++;
+
+      const card = document.createElement('div');
+      card.className = 'announcement-card';
+
+      const imageHTML = post.image ? `<img src="${post.image}" alt="Announcement Image" onclick="openModal(this.src)" />` : '';
+
+      card.innerHTML = `
+  <h2>${post.title}</h2>
+  <div class="datetime">${post.date}</div>
+  <p>${post.message}</p>
+  ${imageHTML}
+`;
+
+      listContainer.appendChild(card);
+    });
+
+    const notifBadge = document.getElementById('notifBadge');
+    if (newPosts > 0) {
+      notifBadge.style.display = 'inline-block';
+      notifBadge.textContent = newPosts;
+    } else {
+      notifBadge.style.display = 'none';
+    }
+
+    localStorage.setItem('lastViewed', Date.now());
+
+    function openModal(src) {
+      const modal = document.getElementById('imageModal');
+      const modalImg = document.getElementById('modalImage');
+      modal.style.display = 'flex';
+      modalImg.src = src;
+    }
+
+    function closeModal() {
+      document.getElementById('imageModal').style.display = 'none';
+    }
+
+    document.getElementById('imageModal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+  </script>
+</body>
+</html>

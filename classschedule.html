@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Class Schedules - Colegio de San Francisco Javier</title>
+
+  <!-- ✅ Favicon -->
+  <link rel="icon" type="image/png" href="images/images-removebg-preview (1).png">
+
+  <link rel="stylesheet" href="classschedule.css" />
+
+  <style>
+    /* ✅ See More button styling */
+    .see-more-btn {
+      margin-top: 10px;
+      padding: 8px 15px;
+      background-color: #4a90e2;
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      transition: 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    }
+
+    .see-more-btn:hover {
+      background-color: #357abd;
+      transform: scale(1.05);
+    }
+
+    .see-more-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* 🔔 Notification badge */
+    .notif-badge {
+      display: none;
+      position: relative;
+      top: -10px;
+      right: 10px;
+      background-color: red;
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 3px 7px;
+      border-radius: 50%;
+      animation: pop 0.4s ease-in-out;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0.5); opacity: 0; }
+      70% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+
+    /* ✅ Dropdown styling */
+    .course-selector {
+      margin: 15px 0;
+    }
+
+    .course-selector select {
+      padding: 8px 15px;
+      font-size: 16px;
+      border-radius: 20px;
+      border: 2px solid #4a90e2;
+      background: #fff;
+      color: #333;
+      font-weight: bold;
+      cursor: pointer;
+      outline: none;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      transition: 0.3s ease;
+    }
+
+    .course-selector select:hover {
+      background: #f0f6ff;
+      border-color: #357abd;
+    }
+
+    .course-selector select:focus {
+      border-color: #2a5da8;
+      box-shadow: 0 0 6px rgba(42, 93, 168, 0.5);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="frontcover.html">HOME</a></li>
+        <li><a href="about.html">ABOUT</a></li>
+        <li>
+          <a href="announcement.html">ANNOUNCEMENT</a>
+          <span class="notif-badge" id="notifBadge">0</span>
+        </li>
+        <li><a href="classschedule.html" class="active">CLASS SCHEDULES</a></li>
+        <li><a href="contact.html">CONTACTS</a></li>
+        <li><a href="teacherprofile.html">TEACHERS PROFILE</a></li>
+      </ul>
+    </nav>
+    <div class="top-right-logo">
+      <img src="images/images-removebg-preview (1).png" alt="School Logo" />
+    </div>
+  </header>
+
+  <section class="about-section">
+    <!-- ✅ Title -->
+    <h1 id="courseTitle">BSIT Class Schedules</h1>
+
+    <!-- ✅ Dropdown under title -->
+    <div class="course-selector">
+      <select id="courseSelect">
+        <option value="bsit">BSIT</option>
+        <option value="bshm">BSHM</option>
+        <option value="bsed">BSED</option>
+      </select>
+    </div>
+
+    <!-- ✅ Subtitle -->
+    <p>First Semester | SY 2025-2026</p>
+
+    <div class="schedule-container" id="scheduleContainer"></div>
+  </section>
+
+  <script>
+  const defaultData = { 
+    bsit: {year1:[],year2:[],year3:[],year4:[]}, 
+    bshm: {year1:[],year2:[],year3:[],year4:[]}, 
+    bsed: {year1:[],year2:[],year3:[],year4:[]} 
+  };
+
+  function getScheduleData() {
+    const saved = localStorage.getItem("classScheduleData");
+    return saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(defaultData));
+  }
+
+  function renderSchedule(courseKey) {
+    const container = document.getElementById("scheduleContainer");
+    container.innerHTML = "";
+
+    const years = {
+      year1: "FIRST YEAR",
+      year2: "SECOND YEAR",
+      year3: "THIRD YEAR",
+      year4: "FOURTH YEAR"
+    };
+
+    const data = getScheduleData()[courseKey];
+
+    for (const yearKey in years) {
+      const wrapper = document.createElement("div");
+      wrapper.classList.add("year-column-wrapper");
+
+      const column = document.createElement("div");
+      column.classList.add("year-column");
+
+      const closeBtn = document.createElement("button");
+      closeBtn.classList.add("close-btn");
+      closeBtn.innerHTML = "✕";
+
+      const title = document.createElement("h2");
+      title.textContent = years[yearKey];
+
+      const ul = document.createElement("ul");
+
+      data[yearKey].forEach((subject, index) => {
+        const li = document.createElement("li");
+        li.textContent = subject;
+        if (index >= 3) li.style.display = "none"; // hide extra
+        ul.appendChild(li);
+      });
+
+      column.appendChild(closeBtn);
+      column.appendChild(title);
+      column.appendChild(ul);
+
+      if (data[yearKey].length > 3) {
+        const seeMoreBtn = document.createElement("button");
+        seeMoreBtn.textContent = "See More";
+        seeMoreBtn.classList.add("see-more-btn");
+
+        seeMoreBtn.addEventListener("click", () => {
+          const hiddenItems = ul.querySelectorAll("li[style*='display: none']");
+          const isHidden = hiddenItems.length > 0;
+
+          ul.querySelectorAll("li").forEach((li, index) => {
+            if (index >= 3) {
+              li.style.display = isHidden ? "list-item" : "none";
+            }
+          });
+
+          seeMoreBtn.textContent = isHidden ? "See Less" : "See More";
+        });
+
+        column.appendChild(seeMoreBtn);
+      }
+
+      wrapper.appendChild(column);
+      container.appendChild(wrapper);
+
+      column.addEventListener("click", function(e) {
+        if (!e.target.classList.contains("close-btn") && !e.target.classList.contains("see-more-btn")) {
+          column.classList.add("expanded");
+        }
+      });
+
+      closeBtn.addEventListener("click", function(e) {
+        e.stopPropagation();
+        column.classList.remove("expanded");
+      });
+    }
+  }
+
+  // ✅ Dropdown change updates title + schedule
+  document.getElementById("courseSelect").addEventListener("change", function() {
+    const selected = this.value;
+    const title = document.getElementById("courseTitle");
+    title.textContent = this.options[this.selectedIndex].text + " Class Schedules";
+    renderSchedule(selected);
+  });
+
+  // ✅ Load default (BSIT)
+  window.onload = () => {
+    renderSchedule("bsit");
+  };
+
+  // 🔔 Notification badge stays same
+  const posts = JSON.parse(localStorage.getItem('announcements')) || [];
+  const lastViewed = localStorage.getItem('lastViewed') || 0;
+  let newCount = 0;
+
+  posts.forEach(post => {
+    const postTime = new Date(post.date).getTime();
+    if (postTime > lastViewed) newCount++;
+  });
+
+  const notif = document.getElementById('notifBadge');
+  if (notif) {
+    if (newCount > 0) {
+      notif.textContent = newCount;
+      notif.style.display = 'inline-block';
+    } else {
+      notif.style.display = 'none';
+    }
+  }
+</script>

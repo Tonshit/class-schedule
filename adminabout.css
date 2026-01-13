@@ -1,0 +1,163 @@
+body {
+  background: linear-gradient(to bottom right, #f4f6fc, #eaf0ff);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+header {
+  background-color: #1e4fa3;
+  color: white;
+  padding: 1.5rem 0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  animation: fadeIn 1s ease-out forwards;
+  opacity: 0;
+  position: relative;
+  z-index: 100;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  margin: 0 1rem;
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+nav ul li a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -5px;
+  left: 0;
+  background-color: #3498db;
+  transition: width 0.3s ease;
+}
+
+nav ul li a:hover {
+  color: #3498db;
+}
+
+nav ul li a:hover::after {
+  width: 100%;
+}
+
+.top-right-logo {
+  position: absolute;
+  top: 80px;
+  right: 20px;
+  z-index: 10;
+}
+
+.top-right-logo img {
+  width: 150px;
+  height: auto;
+}
+
+.about-section {
+  min-height: 100vh;
+  padding: 5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  animation: fadeIn 1s ease-out forwards;
+  opacity: 0;
+  background: url('https://cdnb.artstation.com/p/assets/images/images/015/677/407/original/bogdan-mb0sco-school-class-class-animated.gif?1549221195') no-repeat center center/cover;
+}
+
+.about-section h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+
+.about-section p {
+  font-size: 1.2rem;
+  max-width: 800px;
+  line-height: 1.7;
+  color: #ffffff;
+}
+
+.back-btn {
+  margin-top: 2rem;
+  padding: 12px 30px;
+  background-color: #3269ce;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.back-btn:hover {
+  background-color: #244c9f;
+  transform: scale(1.05);
+}
+
+/* Members Section */
+.members-section {
+  padding: 40px 20px;
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+.members-section h2 {
+  font-size: 2em;
+  margin-bottom: 30px;
+}
+
+.members-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+}
+
+.member-card {
+  width: 200px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.member-card:hover {
+  transform: translateY(-5px);
+}
+
+.member-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.member-card p {
+  font-weight: bold;
+  font-size: 16px;
+  margin: 0;
+}

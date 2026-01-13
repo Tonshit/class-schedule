@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact - Colegio de San Francisco Javier Portal</title>
+
+  <!-- External CSS files -->
+  <link rel="stylesheet" href="adminfrontcover.css" />
+  <link rel="stylesheet" href="admincontact.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="icon" type="image/png" href="images/images-removebg-preview (1).png">
+
+  <!-- Inline Styles for Notification Badge -->
+  <style>
+    .notif-badge {
+      display: none;
+      position: absolute;
+      top: -6px;
+      right: -10px;
+      background: red;
+      color: white;
+      font-size: 12px;
+      padding: 2px 6px;
+      border-radius: 50%;
+      font-weight: bold;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    nav li {
+      position: relative;
+    }
+
+    nav a {
+      color: #000;
+      text-decoration: none;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header>
+    <nav>
+      <ul>
+        <li><a href="adminfrontcover.html" class="nav-link"><i class="fas fa-home"></i> HOME</a></li>
+        <li><a href="adminabout.html" class="nav-link"><i class="fas fa-info-circle"></i> ABOUT</a></li>
+        <li>
+          <a href="adminannouncement.html" class="nav-link"><i class="fas fa-bullhorn"></i> ANNOUNCEMENT</a>
+          <span class="notif-badge" id="notifBadge">0</span>
+        </li>
+        <li><a href="adminclassschedule.html" class="nav-link"><i class="fas fa-calendar-alt"></i> CLASS SCHEDULES</a></li>
+        <li><a href="admincontact.html" class="nav-link"><i class="fas fa-address-book"></i> CONTACTS</a></li>
+        <li><a href="adminteacherprofile.html" class="nav-link"><i class="fas fa-graduation-cap"></i>
+</i> TEACHERS PROFILE</a></li>
+      </ul>
+    </nav>
+
+    <!-- Logo on the top right -->
+    <div class="top-right-logo">
+      <img src="images/images-removebg-preview (1).png" alt="School Logo">
+    </div>
+  </header>
+
+  <!-- Contact Section -->
+  <section class="about-section">
+    <h1>Contact Us</h1>
+    <p class="intro">We’d love to hear from you. Here’s how you can reach us:</p>
+    
+    <div class="contact-info">
+      <p><i class="fas fa-map-marker-alt"></i> East Poblacion, Rizal, Zamboanga del Norte, Philippines</p>
+      <p><i class="fas fa-phone"></i> (053) 555-1234 / 0917-000-0000</p>
+      <p><i class="fas fa-envelope"></i> info@csfjportal.edu.ph</p>
+      <p><i class="fas fa-globe"></i> www.csfjportal.edu.ph</p>
+      <p><i class="fab fa-facebook"></i> <a href="https://www.facebook.com/CSFJRI/" target="_blank">facebook.com/CSFJPortal</a></p>
+    </div>
+
+    <a href="adminfrontcover.html" class="back-btn">Back to Home</a>
+  </section>
+
+  <!-- Script for Notification Badge -->
+  <script>
+    const posts = JSON.parse(localStorage.getItem('announcements')) || [];
+    const lastViewed = localStorage.getItem('lastViewed') || 0;
+    let newCount = 0;
+
+    posts.forEach(post => {
+      const postTime = new Date(post.date).getTime();
+      if (postTime > lastViewed) newCount++;
+    });
+
+    const notif = document.getElementById('notifBadge');
+    if (newCount > 0) {
+      notif.textContent = newCount;
+      notif.style.display = 'inline-block';
+    } else {
+      notif.style.display = 'none';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Professional Web Design</title>
+  <link rel="stylesheet" href="frontcover.css">
+  <link rel="icon" type="image/png" href="images/images-removebg-preview (1).png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* 🔔 Notification badge style */
+    .notif-badge {
+      display: none;
+      position: relative;
+      top: -10px;
+      right: 10px;
+      background-color: red;   /* ✅ Red background */
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 3px 7px;
+      border-radius: 50%;
+      animation: pop 0.4s ease-in-out;
+    }
+
+    /* Small pop animation */
+    @keyframes pop {
+      0% { transform: scale(0.5); opacity: 0; }
+      70% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header>
+    <nav>
+      <ul>
+        <li><a href="frontcover.html" class="nav-link"><i class="fas fa-home"></i> HOME</a></li>
+        <li><a href="about.html" class="nav-link"><i class="fas fa-info-circle"></i> ABOUT</a></li>
+        <li>
+          <a href="announcement.html" class="nav-link"><i class="fas fa-bullhorn"></i> ANNOUNCEMENT</a>
+          <span class="notif-badge" id="notifBadge">0</span>
+        </li>
+        <li><a href="classschedule.html" class="nav-link"><i class="fas fa-calendar-alt"></i> CLASS SCHEDULES</a></li>
+        <li><a href="contact.html" class="nav-link"><i class="fas fa-address-book"></i> CONTACTS</a></li>
+        <li><a href="teacherprofile.html" class="nav-link"><i class="fas fa-graduation-cap"></i> TEACHERS PROFILE</a></li>
+        <li><a href="login.html" onclick="logout()" class="nav-link"><i class="fas fa-sign-out-alt"></i> LOG OUT</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="slideshow-container">
+      <div class="slide active" style="background-image: url('https://cdnb.artstation.com/p/assets/images/images/012/235/563/large/rasel-coridor2.jpg?1533742657')"></div>
+    </div>
+
+    <div class="hero-container">
+      <!-- Logo + Address + Title -->
+      <div class="hero-content">
+        <img src="images/images-removebg-preview (1).png" alt="School Logo" class="hero-logo">
+        <p class="school-address">East Poblacion, Rizal, Zamboanga del Norte 7104</p>
+        <h1 class="animate-fade-in">COLEGIO DE SAN FRANCISCO JAVIER PORTAL</h1>
+        <p class="animate-slide-up">Your gateway to class updates, schedules, and school news all in one place!</p>
+        <a href="announcement.html" class="cta-button animate-fade-in" id="viewNowBtn">VIEW NOW</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- JavaScript -->
+  <script>
+    function logout() {
+      window.location.href = "login.html"; 
+    }
+
+    const posts = JSON.parse(localStorage.getItem('announcements')) || [];
+    const lastViewed = localStorage.getItem('lastViewed') || 0;
+    let newCount = 0;
+
+    posts.forEach(post => {
+      const postTime = new Date(post.date).getTime();
+      if (postTime > lastViewed) {
+        newCount++;
+      }
+    });
+
+    const notif = document.getElementById('notifBadge');
+    if (newCount > 0) {
+      notif.textContent = newCount;
+      notif.style.display = 'inline-block'; // show red badge
+    } else {
+      notif.style.display = 'none'; // hide when no new announcements
+    }
+
+    // 👉 Add Enter key to trigger "VIEW NOW"
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Enter") {
+        document.getElementById("viewNowBtn").click();
+      }
+    });
+  </script>
+</body>
+</html>
